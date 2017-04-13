@@ -25,7 +25,7 @@
             "stacking": "percent",
             "dataLabels": {
                 "enabled": true,
-                "format":"{point.percentage:.0f}%",
+                "format":"{point.percentage:.2f}%",
                 "color": "white"
             }
         }

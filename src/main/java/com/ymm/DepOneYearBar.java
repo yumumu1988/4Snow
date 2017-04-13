@@ -10,6 +10,7 @@ import java.util.StringJoiner;
 /**
  * Created by zhanghailin on 2017/4/12.
  */
+//一年间各门诊容量及份额
 public class DepOneYearBar extends ChartObject {
 
     public DepOneYearBar(String sTime, String eTime, String dep, List<String> productList, String chart){

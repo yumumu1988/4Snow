@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by James on 4/12/2017.
  */
+//一年市场还原走势容量线份额线形图
 public class LineChartObject extends ChartObject {
     private String chartName;
     private List<String> productNameList;
@@ -35,7 +36,8 @@ public class LineChartObject extends ChartObject {
 
         String productWhere = StringUtils.join(proList, ",");
 
-        String sql = String.format("select date, product, sum(count) as count from dep where date >= %s and date <= %s and product in (%s) group by date, product order by date desc;", sTime, eTime, productWhere);
+//        String sql = String.format("select date, product, sum(count) as count from dep where date >= %s and date <= %s and product in (%s) group by date, product order by date desc;", sTime, eTime, productWhere);
+        String sql = String.format("select date, product, round(sum(count)) as count from ( (select date, product, count from dep where date >= %s and date <= %s and product in (%s)) union all (select date, product, round(count/7,2) as count from room where date >= %s and date <= %s and product in (%s)) ) dep group by date, product order by date desc;", sTime, eTime, productWhere, sTime, eTime, productWhere);
 
         valueObjectList = jdbcTemplate.query(sql, new RowMapper<LineValueObject>() {
             @Override
@@ -48,7 +50,8 @@ public class LineChartObject extends ChartObject {
             }
         });
 
-        String totalSql = String.format("select date, sum(count) as count from dep where date >= %s and date <= %s group by date;", sTime, eTime);
+//        String totalSql = String.format("select date, sum(count) as count from dep where date >= %s and date <= %s group by date;", sTime, eTime);
+        String totalSql = String.format("select date, round(sum(count)) as count from ((select date, product, count from dep where date >= %s and date <= %s and product in (%s)) union all (select date, product, round(count/7, 2) as count from room where date >= %s and date <= %s and product in (%s))) dep group by date;", sTime, eTime, productWhere, sTime, eTime, productWhere);
 
         totalValueObjectList = jdbcTemplate.query(totalSql, new RowMapper<LineTotalValueObject>() {
             @Override

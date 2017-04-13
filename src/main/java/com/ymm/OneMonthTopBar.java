@@ -11,6 +11,7 @@ import java.util.StringJoiner;
 /**
  * Created by zhanghailin on 2017/4/12.
  */
+//当月TOP科室客户容量份额柱状图
 public class OneMonthTopBar extends ChartObject {
 
     public OneMonthTopBar(String date, List<String> productList, String chart, String top1, String top2){

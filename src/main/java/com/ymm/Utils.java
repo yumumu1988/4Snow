@@ -38,15 +38,6 @@ public class Utils {
         resourceLoader= loader;
     }
 
-    public static String getCategories(List<String> categoryList){
-        List<String> result = new ArrayList<String>();
-        String format = "\"%s\"";
-        for (String item : categoryList){
-            result.add(String.format(format, item));
-        }
-        return StringUtils.join(result, ",");
-    }
-
     public static String getProductWhere(List<String> productNameList){
         List<String> proList = new ArrayList<String>();
         for (String item : productNameList){
@@ -78,6 +69,32 @@ public class Utils {
         return productNameList;
     }
 
+    public static String getTop1(String top1){
+        return Integer.toString(Integer.parseInt(top1) - 1);
+    }
+
+    public static String getTop2(String top1, String top2){
+        return Integer.toString(Integer.parseInt(top2) - Integer.parseInt(top1) + 1);
+    }
+
+    public static LinkedHashMap<String,String> getDepList() {
+        List<String> list = jdbcTemplate.queryForList("select dep from dep group by dep", String.class);
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
+        for (String item : list){
+            map.put(item, item);
+        }
+        return map;
+    }
+
+    public static String getCategories(List<String> categoryList){
+        List<String> result = new ArrayList<String>();
+        String format = "\"%s\"";
+        for (String item : categoryList){
+            result.add(String.format(format, item));
+        }
+        return StringUtils.join(result, ",");
+    }
+
     public static String getSeries(List<String> productNameList, List<String> categoryList, List<ValueObject> valueObjectList){
         List<String> result = new ArrayList<String>();
         String format = "{\"name\":\"%s\",\"data\":[%s]}";
@@ -99,10 +116,6 @@ public class Utils {
         return StringUtils.join(result, ",");
     }
 
-    public static String getGroupSeries(){
-        return "";
-    }
-
     public static String getJson(ChartObject chartObject, String fileName){
         return getJson(fileName, chartObject.getChartName(), chartObject.getCategories(), chartObject.getSeries());
     }
@@ -122,20 +135,53 @@ public class Utils {
         return jsonString.toString().replace("@title", title).replace("@categories",categories).replace("@series",series);
     }
 
-    public static String getTop1(String top1){
-        return Integer.toString(Integer.parseInt(top1) - 1);
-    }
-
-    public static String getTop2(String top1, String top2){
-        return Integer.toString(Integer.parseInt(top2) - Integer.parseInt(top1) + 1);
-    }
-
-    public static LinkedHashMap<String,String> getDepList() {
-        List<String> list = jdbcTemplate.queryForList("select dep from dep group by dep", String.class);
-        LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        for (String item : list){
-            map.put(item, item);
+    /*
+    x1 is date and x2 is name
+     */
+    public static String getGroupCategories(List<String> baseCategoryList, List<String> categoryList) {
+        String format1 = "{\"name\": \"%s\", \"categories\": [%s]}";
+        String format2 = "\"%s\"";
+        List<String> formart2ResultList = new ArrayList<>();
+        for (String item : categoryList){
+            formart2ResultList.add(String.format(format2, item));
         }
-        return map;
+        String format2Result = StringUtils.join(formart2ResultList, ",");
+        List<String> format1ResultList = new ArrayList<>();
+        for (String item : baseCategoryList){
+            format1ResultList.add(String.format(format1, format2Result));
+        }
+        return StringUtils.join(format1ResultList, ",");
     }
+
+    public static String getGroupSeries(List<String> productNameList, List<String> baseCategoryList, List<String> categoryList, List<GroupValueObject> groupValueObjectList){
+        List<String> result  = new ArrayList<>();
+        String format = "{\"name\": \"%s\",\"data\":[%s]}";
+        productNameList = sortProduct(productNameList);
+        for (String pro : productNameList){
+            List<String> valueList  = new ArrayList<>();
+            for (String x2 : baseCategoryList){
+                for(String x1 : categoryList){
+                    String y = "0";
+                    for (GroupValueObject item : groupValueObjectList){
+                        if(item.getLegend().equalsIgnoreCase(pro) && item.getX1().equalsIgnoreCase(x1) && item.getX2().equalsIgnoreCase(x2)){
+                            y = item.getY();
+                            break;
+                        }
+                    }
+                    valueList.add(y);
+                }
+            }
+            result.add(String.format(format, pro, StringUtils.join(valueList, ",")));
+        }
+        return StringUtils.join(result, ",");
+
+    }
+
+    public static String getGroupJson(ChartObject chartObject, String filename){
+        return getJson(filename, chartObject.getChartName(), chartObject.getGroupCategories(), chartObject.getGroupSeries());
+    }
+
+    /*
+    x1 is name and x2 is also name
+     */
 }

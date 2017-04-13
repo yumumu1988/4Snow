@@ -17,7 +17,7 @@
             "cursor": "pointer",
             "dataLabels": {
                 "enabled": true,
-                "format": "{point.name}: {point.percentage:.1f} %",
+                "format": "{point.name}: {point.percentage:.2f} %",
                 "style": {
                     "color": "black"
                 }

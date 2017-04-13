@@ -10,14 +10,16 @@ import java.util.Map;
 /**
  * Created by James on 4/12/2017.
  */
+//各科室容量份额饼状图
 public class PieChartObject extends ChartObject {
     private String chartName;
     private String yFormat;
     private String productName;
     private String dateTime;
-    private List<String> dep;
+//    private List<String> dep;
 
-    public PieChartObject(String date, String product, List<String> depList, String chart, String type){
+//    public PieChartObject(String date, String product, List<String> depList, String chart, String type){
+    public PieChartObject(String date, String product, String chart, String type){
         chartName = chart;
         if(type.equalsIgnoreCase("份额")){
             yFormat = "\"{point.name}: {point.percentage:.1f} %\"";
@@ -26,7 +28,7 @@ public class PieChartObject extends ChartObject {
         }
         dateTime = date;
         productName = product;
-        dep = depList;
+//        dep = depList;
     }
 
     public String getChartName() {
@@ -39,16 +41,16 @@ public class PieChartObject extends ChartObject {
 
     public String getSeries(){
         String depWhere = "";
-        if(!dep.contains("全部")){
-            String depFormat = "'%s'";
-            List<String> depList = new ArrayList<String>();
-            for (String item : dep){
-                depList.add(String.format(depFormat, item));
-            }
-            depWhere = " and dep in (" + StringUtils.join(depList, ",") + ") ";
-        }
+//        if(!dep.contains("全部")){
+//            String depFormat = "'%s'";
+//            List<String> depList = new ArrayList<String>();
+//            for (String item : dep){
+//                depList.add(String.format(depFormat, item));
+//            }
+//            depWhere = " and dep in (" + StringUtils.join(depList, ",") + ") ";
+//        }
 
-        String sql = String.format("select dep, sum(count) as count from dep where date = %s and product = '%s' %s group by dep order by count desc;", dateTime, productName, depWhere);
+        String sql = String.format("select dep, sum(count) as count from dep where date = %s and product = '%s' %s group by dep order by count desc limit 10;", dateTime, productName, depWhere);
         List<String> resultList = new ArrayList<String>();
         String format = "{\"name\":\"%s\",\"y\":%s}";
         List<Map<String, Object>> data = jdbcTemplate.queryForList(sql);

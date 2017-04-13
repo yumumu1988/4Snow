@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * Created by James on 4/12/2017.
  */
+//当月各科室门诊容量份额柱状图
 public class OneMonthDepChart extends ChartObject {
     private String chartName;
     private List<String> productNameList;
@@ -17,19 +18,18 @@ public class OneMonthDepChart extends ChartObject {
     private List<String> categoryList = new ArrayList<String>();
     private List<ValueObject> valueObjectList = new ArrayList<ValueObject>();
 
-    public OneMonthDepChart(String date, List<String> productList, List<String> depList, String chart, String type){
+    public OneMonthDepChart(String date, List<String> productList, String chart, String type, String top1, String top2){
         chartName = chart;
         chartType = type;
         productNameList = productList;
 
         String productWhere = Utils.getProductWhere(productNameList);
-        String depWhere = Utils.getProductWhere(depList);
 
-        String categorySql = String.format("select dep from dep where date = %s and product in (%s) and dep in (%s) group by dep order by sum(count) desc", date, productWhere, depWhere);
+        String categorySql = String.format("select dep from dep where date = %s and product in (%s) group by dep order by sum(count) desc limit %s, %s", date, productWhere, Utils.getTop1(top1), Utils.getTop2(top1, top2));
 
         categoryList = jdbcTemplate.queryForList(categorySql, String.class);
 
-        String sql = String.format("select dep, product, sum(count) as count from dep where data = %s and product in (%s) and dep in (%s) group by dep;", date, productWhere, depWhere);
+        String sql = String.format("select dep, product, sum(count) as count from dep where date = %s and product in (%s) group by dep,product;", date, productWhere);
 
         valueObjectList = jdbcTemplate.query(sql, new RowMapper<ValueObject>() {
             @Override

@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by zhanghailin on 2017/4/12.
  */
+//当月各门诊TOP客户容量及份额
 public class DepOneMonthTop extends ChartObject {
 
     public DepOneMonthTop(String date, String dep, List<String> productList, String chart, String top1, String top2){

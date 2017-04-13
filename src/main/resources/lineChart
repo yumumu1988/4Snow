@@ -23,7 +23,7 @@
             "dataLabels": {
                 "enabled": true,
                 "allowOverlap":true,
-                "format":"@format"
+                "format":@format
             },
             "enableMouseTracking": false
         }

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by James on 4/12/2017.
  */
-//一年间友谊门诊RAAS容量与份额图
+//一年间友谊门诊RAAS容量与份额图||一年间友谊门诊容量份额柱状图
 public class OneYearChart extends ChartObject{
     private String chartName;
     private List<String> productNameList;
