@@ -1,0 +1,40 @@
+{
+    "credits": {
+        "enabled": false
+    },
+    "chart": {
+        "plotBackgroundColor": null,
+        "plotBorderWidth": null,
+        "plotShadow": false,
+        "type": "pie"
+    },
+    "title": {
+        "text": "@title"
+    },
+    "plotOptions": {
+        "pie": {
+            "allowPointSelect": true,
+            "cursor": "pointer",
+            "dataLabels": {
+                "enabled": true,
+                "format": "{point.name}: {point.percentage:.1f} %",
+                "style": {
+                    "color": "black"
+                }
+            },
+            "showInLegend": true
+        }
+    },
+    "series": [{
+        "colorByPoint": true,
+        "data": [@series]
+    }],
+    "navigation": {
+        "buttonOptions": {
+            "enabled": false
+        }
+    },
+    "exporting": {
+        "type": "image/jpeg"
+    }
+}

@@ -1,0 +1,42 @@
+{
+    "credits": {
+        "enabled": false
+    },
+    "chart": {
+        "type": "column"
+    },
+    "title": {
+        "text": "@title"
+    },
+    "xAxis": {
+        "categories": [@categories]
+    },
+    "yAxis": {
+        "min": 0,
+        "title": {
+            "text": ""
+        },
+        "labels": {
+            "format":"{value}%"
+        }
+    },
+    "plotOptions": {
+        "column": {
+            "stacking": "percent",
+            "dataLabels": {
+                "enabled": true,
+                "format":"{point.percentage:.0f}%",
+                "color": "white"
+            }
+        }
+    },
+    "series": [@series],
+    "navigation": {
+        "buttonOptions": {
+            "enabled": false
+        }
+    },
+    "exporting": {
+        "type": "image/jpeg"
+    }
+}

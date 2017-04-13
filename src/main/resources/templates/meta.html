@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="source">
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" th:href="@{/css/highcharts.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap-select.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.min.css}"/>
+    <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/js/highcharts.js}"></script>
+    <script th:src="@{/js/grouped-categories.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+    <script th:src="@{/js/locales/bootstrap-datetimepicker.zh-CN.js}"></script>
+    <script th:src="@{/js/bootstrap-select.min.js}"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+</head>
+<header th:fragment="nav">
+    <div class="container">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">科室总览<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a th:href="@{/trendLine}">一年市场还原走势容量线份额线形图</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/pie}">各科室容量份额饼状图</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/oneYearBar}">一年间友谊门诊容量份额柱状图</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/oneMonthBar}">当月各科室门诊容量份额柱状图</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/oneMonthTopBar}">当月TOP科室客户容量份额柱状图</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">各门诊<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a th:href="@{/depOneYearBar}">一年间各门诊容量及份额</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/depOneMonthTop}">当月各门诊TOP客户容量及份额</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/depMultiMonthTop}">多月各门诊TOP客户容量及份额</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">特殊科室(人员不固定)TOP客户容量及份额<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a th:href="@{/centerMultiMonthTop}">中心透析室(多月)TOP客户容量及份额</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/innerMultiMonthTop}">内科门诊(多月)TOP客户容量及份额</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">干保门诊<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a th:href="@{/leaderOneYearBar}">一年内干保门诊RAAS容量和份额</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/leaderOneMonthTop}">当月干保门诊TOP客户容量及份额</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/leaderMultiMonthTop}">多月干保门诊TOP客户容量及份额</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">病房总览<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a th:href="@{/trendRoomBar}">一年内友谊病房RAAS容量和份额</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/oneMonthRoomBar}">当月各科室病房RAAS容量份额柱状图</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/oneMonthRoomTopBar}">当月TOP病房客户容量份额柱状图</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">各病房<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a th:href="@{/roomOneYearBar}">一年间各病房容量及份额</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/shenRoomOneMonthTop}">*肾内科病房TOP(3)客户RAAS容量及份额图</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/roomMultiMonthTop}">多月各病房TOP客户容量及份额</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+<div id="chartDiv" class="col-md-8" th:fragment="chartDiv">
+    <button type="button" id="export" class="btn btn-primary">下载</button>
+    <div id="chart" class="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"/>
+</div>
+</html>

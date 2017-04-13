@@ -1,0 +1,40 @@
+{
+    "credits": {
+        "enabled": false
+    },
+    "title": {
+        "text": "@title"
+    },
+    "xAxis": {
+            "categories": [@categories]
+        },
+    "yAxis": {
+        "title": {
+            "text": ""
+        }
+    },
+    "legend": {
+        "layout": "vertical",
+        "align": "right",
+        "verticalAlign": "middle"
+    },
+    "plotOptions": {
+        "line": {
+            "dataLabels": {
+                "enabled": true,
+                "allowOverlap":true,
+                "format":"@format"
+            },
+            "enableMouseTracking": false
+        }
+    },
+    "series": [@series],
+    "navigation": {
+        "buttonOptions": {
+            "enabled": false
+        }
+    },
+    "exporting": {
+        "type": "image/jpeg"
+    }
+}
