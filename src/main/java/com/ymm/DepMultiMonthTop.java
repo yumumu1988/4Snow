@@ -18,7 +18,7 @@ public class DepMultiMonthTop extends ChartObject {
 
         String productWhere = Utils.getProductWhere(productNameList);
 
-        String baseCategorySql = String.format("select doctor from dep where date >= %s and date <= %s and dep = '%s' and product in (%s) group by doctor order by sum(count) desc limit %s, %s", sTime, eTime, dep, productWhere, Utils.getTop1(top1), Utils.getTop2(top1, top2));
+        String baseCategorySql = String.format("select doctor from dep where date = %s and dep = '%s' and product in (%s) group by doctor order by sum(count) desc limit %s, %s", eTime, dep, productWhere, Utils.getTop1(top1), Utils.getTop2(top1, top2));
 
         baseCategoryList = jdbcTemplate.queryForList(baseCategorySql, String.class);
 
@@ -26,7 +26,7 @@ public class DepMultiMonthTop extends ChartObject {
 
         categoryList = jdbcTemplate.queryForList(categorySql, String.class);
 
-        String sql = String.format("");
+        String sql = String.format("select date as x1, doctor as x2, sum(count) as y, product as l from dep where date >= %s and date <= %s and dep = '%s' and product in (%s) group by date, doctor, product", sTime, eTime, dep, productWhere);
 
         groupValueObjectList = jdbcTemplate.query(sql, new RowMapper<GroupValueObject>() {
             @Override

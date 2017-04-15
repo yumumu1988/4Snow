@@ -148,7 +148,7 @@ public class Utils {
         String format2Result = StringUtils.join(formart2ResultList, ",");
         List<String> format1ResultList = new ArrayList<>();
         for (String item : baseCategoryList){
-            format1ResultList.add(String.format(format1, format2Result));
+            format1ResultList.add(String.format(format1, item, format2Result));
         }
         return StringUtils.join(format1ResultList, ",");
     }

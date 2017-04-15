@@ -124,9 +124,21 @@ public class SnowController {
         return Utils.getJson(oneMonthTopBar, type);
     }
 
+    @RequestMapping(value = "/depOneYearBar")
+    public ModelAndView depOneYearBar()
+    {
+        ModelAndView modelAndView = new ModelAndView("depOneYearBar");
+        modelAndView.addObject("depList", Utils.getDepList());
+        return modelAndView;
+    }
 
-
-
+    @RequestMapping(value = "/depOneYearBarChart")
+    @ResponseBody
+    public String depOneYearBarChart(@RequestParam("name") String name, @RequestParam("startTime") String startTime,
+                                     @RequestParam("endTime") String endTime, @RequestParam("dep") String dep, @RequestParam("type") String type){
+        DepOneYearBar depOneYearBar = new DepOneYearBar(startTime.replace("-", ""), endTime.replace("-", ""), dep, proList, name);
+        return Utils.getJson(depOneYearBar, type);
+    }
 
     @RequestMapping(value = "/depOneMonthTop")
     public ModelAndView depOneMonthTop(){
@@ -151,4 +163,28 @@ public class SnowController {
         DepOneMonthTop depOneMonthTop = new DepOneMonthTop(date.replace("-", ""), dep, list, name, top1, top2);
         return Utils.getJson(depOneMonthTop, chart);
     }
+
+    @RequestMapping(value = "/depMultiMonthTop")
+    public ModelAndView depMultiMonthTop(){
+        ModelAndView modelAndView = new ModelAndView("depMultiMonthTop");
+        modelAndView.addObject("depList", Utils.getDepList());
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
+        for (int i = 1; i <= 50; i++){
+            map.put(i, i);
+        }
+        modelAndView.addObject("topList", map);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/depMultiMonthTopChart")
+    @ResponseBody
+    public String depMultiMonthTopChart(@RequestParam("name") String name, @RequestParam("startTime") String startTime,
+                                        @RequestParam("endTime") String endTime, @RequestParam("dep") String dep,
+                                        @RequestParam("top1") String top1, @RequestParam("top2") String top2,
+                                        @RequestParam("type") String type){
+        DepMultiMonthTop depMultiMonthTop = new DepMultiMonthTop(startTime.replace("-", ""), endTime.replace("-", ""), dep, proList, name, top1, top2);
+        return Utils.getGroupJson(depMultiMonthTop, type);
+    }
+
+
 }
