@@ -184,4 +184,60 @@ public class Utils {
     /*
     x1 is name and x2 is also name
      */
+    public static String getSpecialGroupCategories(List<String> baseCategoryList, List<SpecialCategoryObject> categoryList){
+        String format1 = "{\"name\": \"%s\", \"categories\": [%s]}";
+        List<String> format1ResultList = new ArrayList<>();
+        for (String item : baseCategoryList){
+
+            String result = fillCategory(item, categoryList);
+
+            format1ResultList.add(String.format(format1, item, result));
+        }
+        return StringUtils.join(format1ResultList, ",");
+    }
+
+    private static String fillCategory(String baseCategory, List<SpecialCategoryObject> categoryList) {
+        List<String> result = new ArrayList<>();
+        String format2 = "\"%s\"";
+        for (SpecialCategoryObject item : categoryList){
+            if(item.getDate().equalsIgnoreCase(baseCategory)){
+                result.add(String.format(format2, item.getDoctor()));
+            }
+        }
+        return StringUtils.join(result, ",");
+    }
+
+    public static String getSpecialGroupSeries(List<String> productNameList, List<String> baseCategoryList, List<SpecialCategoryObject> specialCategoryList, List<GroupValueObject> groupValueObjectList){
+        List<String> result  = new ArrayList<>();
+        String format = "{\"name\": \"%s\",\"data\":[%s]}";
+        productNameList = sortProduct(productNameList);
+        for (String pro : productNameList){
+            List<String> valueList  = new ArrayList<>();
+            for (String x2 : baseCategoryList){
+                for (SpecialCategoryObject x1 : specialCategoryList){
+                    if(x1.getDate().equalsIgnoreCase(x2)){
+
+                        String y = "0";
+
+                        for (GroupValueObject item : groupValueObjectList){
+                            if(item.getLegend().equalsIgnoreCase(pro) && item.getX2().equalsIgnoreCase(x2) && item.getX1().equalsIgnoreCase(x1.getDoctor())){
+
+                                y = item.getY();
+                                break;
+                            }
+                        }
+
+                        valueList.add(y);
+                    }
+                }
+            }
+            result.add(String.format(format, pro, StringUtils.join(valueList, ",")));
+        }
+        return StringUtils.join(result, ",");
+    }
+
+    public static String getSpecialGroupJson(ChartObject chartObject, String filename){
+        return getJson(filename, chartObject.getChartName(), chartObject.getSpecialGroupCategories(), chartObject.getSpecialGroupSeries());
+    }
+
 }

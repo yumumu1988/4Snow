@@ -21,6 +21,7 @@ public class ChartObject {
     protected List<String> baseCategoryList = new ArrayList<>();
     protected List<ValueObject> valueObjectList = new ArrayList<>();
     protected List<GroupValueObject> groupValueObjectList = new ArrayList<>();
+    protected List<SpecialCategoryObject> specialCategoryList = new ArrayList<>();
 
     public String getChartName() {
         return chartName;
@@ -40,5 +41,13 @@ public class ChartObject {
 
     public String getGroupSeries(){
         return Utils.getGroupSeries(productNameList, baseCategoryList, categoryList, groupValueObjectList);
+    }
+
+    public String getSpecialGroupCategories(){
+        return Utils.getSpecialGroupCategories(baseCategoryList, specialCategoryList);
+    }
+
+    public String getSpecialGroupSeries(){
+        return Utils.getSpecialGroupSeries(productNameList, baseCategoryList, specialCategoryList, groupValueObjectList);
     }
 }

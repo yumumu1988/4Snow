@@ -186,5 +186,17 @@ public class SnowController {
         return Utils.getGroupJson(depMultiMonthTop, type);
     }
 
+    @RequestMapping(value = "centerMultiMonthTop")
+    public ModelAndView centerMultiMonthTop(){
+        ModelAndView modelAndView = new ModelAndView("centerMultiMonthTop");
+        return modelAndView;
+    }
 
+    @RequestMapping(value = "/centerMultiMonthTopChart")
+    @ResponseBody
+    public String centerMultiMonthTop(@RequestParam("name") String name, @RequestParam("type") String type,
+                                      @RequestParam("startTime") String startTime, @RequestParam("endTime") String endTime){
+        CenterMultiMonthTop centerMultiMonthTop = new CenterMultiMonthTop(startTime.replace("-", ""), endTime.replace("-", "") , proList, name);
+        return Utils.getSpecialGroupJson(centerMultiMonthTop, type);
+    }
 }
