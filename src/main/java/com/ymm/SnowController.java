@@ -199,4 +199,25 @@ public class SnowController {
         CenterMultiMonthTop centerMultiMonthTop = new CenterMultiMonthTop(startTime.replace("-", ""), endTime.replace("-", "") , proList, name);
         return Utils.getSpecialGroupJson(centerMultiMonthTop, type);
     }
+
+    @RequestMapping(value = "/innerMultiMonthTop")
+    public ModelAndView innerMultiMonthTop(){
+        ModelAndView modelAndView = new ModelAndView("innerMultiMonthTop");
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
+//        for (int i = 1; i <= 50; i++){
+//            map.put(i, i);
+//        }
+        map.put(3, 3);
+        modelAndView.addObject("topList", map);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/innerMultiMonthTopChart")
+    @ResponseBody
+    public String innerMultiMonthTopChart(@RequestParam("name") String name, @RequestParam("type") String type,
+                                          @RequestParam("startTime") String startTime, @RequestParam("endTime") String endTime,
+                                          @RequestParam("top") int top){
+        InnerMultiMonthTop innerMultiMonthTop = new InnerMultiMonthTop(startTime.replace("-", ""), endTime.replace("-", ""), proList, top, name);
+        return innerMultiMonthTop.getJson(type);
+    }
 }

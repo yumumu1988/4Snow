@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by zhanghailin on 2017/4/17.
  */
+//中心透析室(多月)TOP客户容量及份额
 public class CenterMultiMonthTop extends ChartObject {
 
     public CenterMultiMonthTop(String sTime, String eTime, List<String> productList, String chart){
