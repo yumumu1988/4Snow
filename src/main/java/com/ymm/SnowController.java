@@ -235,4 +235,39 @@ public class SnowController {
         LeaderOneYearBar leaderOneYearBar = new LeaderOneYearBar(startTime.replace("-", ""), endTime.replace("-", ""), proList, name);
         return Utils.getGroupJson(leaderOneYearBar, type);
     }
+
+    @RequestMapping(value = "/leaderOneMonthTop")
+    public ModelAndView leaderOneMonthTop(){
+        ModelAndView modelAndView = new ModelAndView("leaderOneMonthTop");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/leaderOneMonthTopChart")
+    @ResponseBody
+    public String leaderOneMonthTopChart(@RequestParam("name") String name, @RequestParam("date") String date,
+                                         @RequestParam("type") String type){
+        LeaderOneMonthTop leaderOneMonthTop = new LeaderOneMonthTop(date.replace("-", ""), name, proList);
+
+        return Utils.getSpecialGroupJson(leaderOneMonthTop, type);
+
+    }
+
+    @RequestMapping(value = "/leaderMultiMonthTop")
+    public ModelAndView leaderMultiMonthTop(){
+        ModelAndView modelAndView = new ModelAndView("leaderMultiMonthTop");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/leaderMultiMonthTopChart")
+    @ResponseBody
+    public String leaderMultiMonthTopChart(@RequestParam("name") String name, @RequestParam("startTime") String startTime,
+                                           @RequestParam("endTime") String endTime, @RequestParam("dep") String dep,
+                                           @RequestParam("type") String type){
+        LeaderMultiMonthTop leaderMultiMonthTop = new LeaderMultiMonthTop(startTime.replace("-", ""), endTime.replace("-", ""), name, dep, proList
+        );
+
+        return Utils.getGroupJson(leaderMultiMonthTop, type);
+    }
 }
