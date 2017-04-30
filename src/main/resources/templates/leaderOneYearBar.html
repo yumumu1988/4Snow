@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="meta::source"/>
+<body>
+<header th:replace="meta::nav"/>
+<div class="container">
+    <div>
+        <h2 class="text-center">一年内干保门诊RAAS容量和份额</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <form onsubmit="return false;">
+                <div class="form-group">
+                    <label>报表名称</label>
+                    <input type="text" class="input form-control" id="name" name="name" placeholder="表名"/>
+                </div>
+                <div class="form-group">
+                    <label>日期范围</label>
+                    <div class="input-group">
+                        <input class="input form-control form_datetime" readonly="readonly" id="startTime" name="startTime" placeholder="日期"/>
+                        <span class="input-group-addon">TO</span>
+                        <input class="input form-control form_datetime" readonly="readonly" id="endTime" name="endTime" placeholder="日期"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>图表类型</label>
+                    <select class="input form-control selectpicker" id="chartS">
+                        <option value="columnChart">容量</option>
+                        <option value="columnPerChart">份额</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" id="submit" class="btn btn-primary">确定</button>
+                </div>
+            </form>
+        </div>
+        <div th:replace="meta::chartDiv"/>
+    </div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript">
+    $(function () {
+        $(".form_datetime").datetimepicker({
+            format: "yyyy-mm",
+            autoclose: true,
+            startView: 3,
+            minView: 3,
+            language: "zh-CN"
+        });
+    });
+
+    var chart;
+
+    $("#submit").click(function () {
+        var data = {
+            name: $("#name").val(),
+            startTime: $("#startTime").val(),
+            endTime: $("#endTime").val(),
+            type: $("#chartS").val()};
+        console.dir(data);
+        $.ajax({
+            url: "/leaderOneYearBarChart",
+            data: data,
+            success: function(data){
+                chart = Highcharts.chart("chart", JSON.parse(data));
+            }
+        });
+    });
+
+    $("#export").click(function () {
+        chart.exportChart();
+    });
+</script>

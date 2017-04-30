@@ -220,4 +220,19 @@ public class SnowController {
         InnerMultiMonthTop innerMultiMonthTop = new InnerMultiMonthTop(startTime.replace("-", ""), endTime.replace("-", ""), proList, top, name);
         return innerMultiMonthTop.getJson(type);
     }
+
+    @RequestMapping(value = "/leaderOneYearBar")
+    public ModelAndView leaderOneYearBar(){
+        ModelAndView modelAndView = new ModelAndView("LeaderOneYearBar");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/leaderOneYearBarChart")
+    @ResponseBody
+    public String leaderOneYearBarChart(@RequestParam(name = "name") String name, @RequestParam("type") String type,
+                                        @RequestParam("startTime") String startTime, @RequestParam("endTime") String endTime){
+        LeaderOneYearBar leaderOneYearBar = new LeaderOneYearBar(startTime.replace("-", ""), endTime.replace("-", ""), proList, name);
+        return Utils.getGroupJson(leaderOneYearBar, type);
+    }
 }
