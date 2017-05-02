@@ -270,4 +270,55 @@ public class SnowController {
 
         return Utils.getGroupJson(leaderMultiMonthTop, type);
     }
+
+    @RequestMapping(value = "/trendRoomBar")
+    public ModelAndView trendRoomBar(){
+        ModelAndView modelAndView = new ModelAndView("trendRoomBar");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/trendRoomBarChart")
+    @ResponseBody
+    public String trendRoomBarChart(@RequestParam("name") String name, @RequestParam("startTime") String startTime,
+                                    @RequestParam("endTime") String endTime, @RequestParam("type") String type){
+        TrendRoomBar trendRoomBar = new TrendRoomBar(name, startTime.replace("-", ""), endTime.replace("-", ""), proList);
+        return Utils.getJson(trendRoomBar, type);
+    }
+
+    @RequestMapping(value = "/oneMonthRoomBar")
+    public ModelAndView oneMonthRoomBar(){
+        ModelAndView modelAndView = new ModelAndView("oneMonthRoomBar");
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
+        for (int i = 1; i <= 50; i++){
+            map.put(i, i);
+        }
+        modelAndView.addObject("topList", map);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/oneMonthRoomBarChart")
+    @ResponseBody
+    public String oneMonthRoomBarChart(@RequestParam("name") String name, @RequestParam("date") String date, @RequestParam("top1") String top1, @RequestParam("top2") String top2, @RequestParam("type") String type){
+        OneMonthRoomBar oneMonthRoomBar = new OneMonthRoomBar(name, date.replace("-", ""), top1, top2, proList);
+        return Utils.getJson(oneMonthRoomBar, type);
+    }
+
+    @RequestMapping(value = "/oneMonthRoomTopBar")
+    public ModelAndView oneMonthRoomTopBar(){
+        ModelAndView modelAndView = new ModelAndView("oneMonthRoomTopBar");
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
+        for (int i = 1; i <= 50; i++){
+            map.put(i, i);
+        }
+        modelAndView.addObject("topList", map);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/oneMonthRoomTopBarChart")
+    @ResponseBody
+    public String oneMonthRoomTopBarChart(@RequestParam("date") String date, @RequestParam("name") String name, @RequestParam("type") String type, @RequestParam("top1") String top1, @RequestParam("top2") String top2){
+        OneMonthRoomTopBar oneMonthRoomTopBar = new OneMonthRoomTopBar(name, date.replace("-", ""), top1, top2, proList);
+//        return Utils.getJson(oneMonthRoomTopBar, type);
+        return Utils.getSpecialGroupJson(oneMonthRoomTopBar, type);
+    }
 }
