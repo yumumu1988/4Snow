@@ -86,6 +86,15 @@ public class Utils {
         return map;
     }
 
+    public static LinkedHashMap<String,String> getRoomList() {
+        List<String> list = jdbcTemplate.queryForList("select dep from room group by dep", String.class);
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
+        for (String item : list){
+            map.put(item, item);
+        }
+        return map;
+    }
+
     public static String getCategories(List<String> categoryList){
         List<String> result = new ArrayList<String>();
         String format = "\"%s\"";

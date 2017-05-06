@@ -97,11 +97,11 @@ public class InnerMultiMonthTop extends ChartObject {
                         if (value.getLegend().equalsIgnoreCase(pro) && value.getX2().equalsIgnoreCase(x2) && value.getX1().equalsIgnoreCase(sco.getDoctor())){
 
                             yValue = value.getY();
-                            top--;
 
                             break;
                         }
                     }
+                    topCount--;
                     valueList.add(yValue);
                 }
             }

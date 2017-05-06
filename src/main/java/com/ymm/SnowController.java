@@ -321,4 +321,60 @@ public class SnowController {
 //        return Utils.getJson(oneMonthRoomTopBar, type);
         return Utils.getSpecialGroupJson(oneMonthRoomTopBar, type);
     }
+
+    @RequestMapping(value = "/roomOneYearBar")
+    public ModelAndView roomOneYearBar(){
+        ModelAndView modelAndView = new ModelAndView("roomOneYearBar");
+        modelAndView.addObject("depList", Utils.getRoomList());
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/roomOneYearBarChart")
+    @ResponseBody
+    public String roomOneYearBarChart(@RequestParam("name") String name, @RequestParam("startTime") String startTime,
+                                      @RequestParam("endTime") String endTime, @RequestParam("dep") String dep,
+                                      @RequestParam("type") String type){
+        RoomOneYearBar roomOneYearBar = new RoomOneYearBar(name, startTime.replace("-", ""), endTime.replace("-", ""), dep, proList);
+        return Utils.getJson(roomOneYearBar, type);
+    }
+
+    @RequestMapping(value = "/shenRoomOneMonthTop")
+    public ModelAndView shenRoomOneMonthTop(){
+        ModelAndView modelAndView = new ModelAndView("shenRoomOneMonthTop");
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
+        map.put(3, 3);
+        modelAndView.addObject("topList", map);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/shenRoomOneMonthTopChart")
+    @ResponseBody
+    public String shenRoomOneMonthTopChart(@RequestParam("name") String name, @RequestParam("type") String type,
+                                           @RequestParam("startTime") String startTime, @RequestParam("endTime") String endTime,
+                                           @RequestParam("top") int top){
+        ShenRoomOneMonthTop shenRoomOneMonthTop = new ShenRoomOneMonthTop(startTime.replace("-", ""), endTime.replace("-", ""), proList, top, name);
+        return shenRoomOneMonthTop.getJson(type);
+    }
+
+    @RequestMapping(value = "/roomMultiMonthTop")
+    public ModelAndView roomMultiMonthTop(){
+        ModelAndView modelAndView = new ModelAndView("roomMultiMonthTop");
+        modelAndView.addObject("depList", Utils.getRoomList());
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
+        for (int i = 1; i <= 50; i++){
+            map.put(i, i);
+        }
+        modelAndView.addObject("topList", map);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/roomMultiMonthTopChart")
+    @ResponseBody
+    public String roomMultiMonthTopChart(@RequestParam("name") String name, @RequestParam("startTime") String startTime,
+                                         @RequestParam("endTime") String endTime, @RequestParam("dep") String dep,
+                                         @RequestParam("top1") String top1, @RequestParam("top2") String top2,
+                                         @RequestParam("type") String type){
+        RoomMultiMonthTop roomMultiMonthTop = new RoomMultiMonthTop(startTime.replace("-", ""), endTime.replace("-", ""), dep, proList, name, top1, top2);
+        return Utils.getGroupJson(roomMultiMonthTop, type);
+    }
 }
