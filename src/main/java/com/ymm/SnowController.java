@@ -23,6 +23,7 @@ public class SnowController {
         add("雅施达");
         add("科素亚");
         add("代文");
+        add("洛汀新");
     }};
 
     @Autowired
