@@ -29,6 +29,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label>产品</label>
+                    <select class="input form-control selectpicker" id="proS" data-live-search="true" multiple="multiple">
+                        <option th:each="e:${proList}" th:value="${e.key}" th:text="${e.value}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>图表类型</label>
                     <select class="input form-control selectpicker" id="chartS">
                         <option value="columnChart">容量</option>
@@ -48,6 +54,7 @@
 </html>
 
 <script type="text/javascript">
+    //<![CDATA[
     $(function () {
         $(".form_datetime").datetimepicker({
             format: "yyyy-mm",
@@ -61,12 +68,19 @@
     var chart;
 
     $("#submit").click(function () {
+        var proArray = $("#proS").val();
+        var pros = "";
+        for (var i = 0; i < proArray.length; i++) {
+            pros += proArray[i] + ",";
+        }
         var data = {
             name: $("#name").val(),
             dep: $("#depS").val(),
             startTime: $("#startTime").val(),
             endTime: $("#endTime").val(),
-            type: $("#chartS").val()};
+            type: $("#chartS").val(),
+            pros: pros
+        };
         console.dir(data);
         $.ajax({
             url: "/depOneYearBarChart",
@@ -80,4 +94,5 @@
     $("#export").click(function () {
         chart.exportChart();
     });
+    //]]>
 </script>

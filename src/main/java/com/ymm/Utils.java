@@ -77,6 +77,15 @@ public class Utils {
         return Integer.toString(Integer.parseInt(top2) - Integer.parseInt(top1) + 1);
     }
 
+    public static LinkedHashMap<String, String> getProList(){
+        List<String> list = jdbcTemplate.queryForList("select product from dep group by product", String.class);
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
+        for (String item : list){
+            map.put(item, item);
+        }
+        return map;
+    }
+
     public static LinkedHashMap<String,String> getDepList() {
         List<String> list = jdbcTemplate.queryForList("select dep from dep group by dep", String.class);
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
