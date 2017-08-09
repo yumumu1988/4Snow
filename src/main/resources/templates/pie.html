@@ -16,12 +16,15 @@
                 </div>
                 <div class="form-group">
                     <label>产品类型</label>
-                    <select class="input form-control selectpicker" id="productS">
-                        <option value="雅施达">雅施达</option>
-                        <option value="科素亚">科素亚</option>
-                        <option value="代文">代文</option>
-                        <option value="洛汀新">洛汀新</option>
-                        <option value="纳催离">纳催离</option>
+                    <!--<select class="input form-control selectpicker" id="productS">-->
+                        <!--<option value="雅施达">雅施达</option>-->
+                        <!--<option value="科素亚">科素亚</option>-->
+                        <!--<option value="代文">代文</option>-->
+                        <!--<option value="洛汀新">洛汀新</option>-->
+                        <!--<option value="纳催离">纳催离</option>-->
+                    <!--</select>-->
+                    <select class="input form-control selectpicker" id="productS" data-live-search="true">
+                        <option th:each="e:${proList}" th:value="${e.key}" th:text="${e.value}"></option>
                     </select>
                 </div>
                 <div class="form-group">

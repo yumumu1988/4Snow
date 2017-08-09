@@ -54,6 +54,7 @@ public class SnowController {
     @RequestMapping(value = "/pie")
     public ModelAndView pie(){
         ModelAndView modelAndView = new ModelAndView("pie");
+        modelAndView.addObject("proList", Utils.getProList());
         return modelAndView;
     }
 
@@ -224,7 +225,7 @@ public class SnowController {
 
     @RequestMapping(value = "/leaderOneYearBar")
     public ModelAndView leaderOneYearBar(){
-        ModelAndView modelAndView = new ModelAndView("LeaderOneYearBar");
+        ModelAndView modelAndView = new ModelAndView("leaderOneYearBar");
         modelAndView.addObject("proList", Utils.getProList());
         return modelAndView;
     }
