@@ -3,6 +3,7 @@ package com.ymm;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  * Created by zhanghailin on 2017/4/9.
  */
 @SpringBootApplication
+@EnableTransactionManagement
 public class Application {
 
     public static ApplicationContext applicationContext;

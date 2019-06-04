@@ -29,7 +29,8 @@ public class OneMonthDepChart extends ChartObject {
 
         categoryList = jdbcTemplate.queryForList(categorySql, String.class);
 
-        String sql = String.format("select dep, product, sum(count) as count from dep where date = %s and product in (%s) group by dep,product;", date, productWhere);
+//        String sql = String.format("select dep, product, sum(count) as count from dep where date = %s and product in (%s) group by dep,product;", date, productWhere);
+        String sql = String.format("select dep, product, round(sum(count),2) as count from dep where date = %s and product in (%s) group by dep,product;", date, productWhere);
 
         valueObjectList = jdbcTemplate.query(sql, new RowMapper<ValueObject>() {
             @Override

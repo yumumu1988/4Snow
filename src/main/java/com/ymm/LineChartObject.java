@@ -45,7 +45,7 @@ public class LineChartObject extends ChartObject {
         String noYSDProductWhere = StringUtils.join(noYSDList, ",");
 
 //        String sql = String.format("select date, product, round(sum(count)) as count from ( (select date, product, count from dep where date >= %s and date <= %s and product in (%s)) union all (select date, product, round(count/7,2) as count from room where date >= %s and date <= %s and product in (%s)) ) dep group by date, product order by date desc;", sTime, eTime, productWhere, sTime, eTime, productWhere);
-        String sql = String.format("select date, product, round(sum(count)) as count from ( (select date, product, count from dep where date >= %s and date <= %s and product in (%s)) union all (select date, product, round(count/7,2) as count from room where date >= %s and date <= %s and product in (%s)) union all (select date, product, round(count/7.5,2) as count from room where date >= %s and date <= %s and product in (%s)) ) dep group by date, product order by date desc;", sTime, eTime, productWhere, sTime, eTime, noYSDProductWhere, sTime, eTime, "\"雅施达\"");
+        String sql = String.format("select date, product, round(sum(count)) as count from ( (select date, product, count from dep where date >= %s and date <= %s and product in (%s)) union all (select date, product, round(count/30,2) as count from room where date >= %s and date <= %s and product in (%s)) union all (select date, product, round(count/30,2) as count from room where date >= %s and date <= %s and product in (%s)) ) dep group by date, product order by date desc;", sTime, eTime, productWhere, sTime, eTime, noYSDProductWhere, sTime, eTime, "\"雅施达\"");
 
         valueObjectList = jdbcTemplate.query(sql, new RowMapper<LineValueObject>() {
             @Override
@@ -60,7 +60,7 @@ public class LineChartObject extends ChartObject {
         });
 
 //        String totalSql = String.format("select date, round(sum(count)) as count from ((select date, product, count from dep where date >= %s and date <= %s and product in (%s)) union all (select date, product, round(count/7, 2) as count from room where date >= %s and date <= %s and product in (%s))) dep group by date;", sTime, eTime, productWhere, sTime, eTime, productWhere);
-        String totalSql = String.format("select date, round(sum(count)) as count from ((select date, product, count from dep where date >= %s and date <= %s and product in (%s)) union all (select date, product, round(count/7, 2) as count from room where date >= %s and date <= %s and product in (%s)) union all (select date, product, round(count/7.5, 2) as count from room where date >= %s and date <= %s and product in (%s))) dep group by date;", sTime, eTime, productWhere, sTime, eTime, noYSDProductWhere, sTime, eTime, "\"雅施达\"");
+        String totalSql = String.format("select date, round(sum(count)) as count from ((select date, product, count from dep where date >= %s and date <= %s and product in (%s)) union all (select date, product, round(count/30, 2) as count from room where date >= %s and date <= %s and product in (%s)) union all (select date, product, round(count/30, 2) as count from room where date >= %s and date <= %s and product in (%s))) dep group by date;", sTime, eTime, productWhere, sTime, eTime, noYSDProductWhere, sTime, eTime, "\"雅施达\"");
 
         totalValueObjectList = jdbcTemplate.query(totalSql, new RowMapper<LineTotalValueObject>() {
             @Override
@@ -94,7 +94,7 @@ public class LineChartObject extends ChartObject {
             for (String date : categoryList){
                 String value = "0";
                 for (LineValueObject object : valueObjectList){
-                    if(object.getProduct().equalsIgnoreCase(pro) && object.getDate().equalsIgnoreCase(date)){
+                    if(object.getProduct().trim().equalsIgnoreCase(pro) && object.getDate().equalsIgnoreCase(date)){
                         if(chartType.equalsIgnoreCase("容量")){
                             value = object.getCount();
                         } else {
